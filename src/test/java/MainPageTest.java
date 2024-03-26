@@ -1,39 +1,30 @@
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
 import static org.openqa.selenium.By.cssSelector;
-import static org.openqa.selenium.By.xpath;
 
 public class MainPageTest extends TestBase {
 
     final String urlPage = "http://localhost/litecart";
+    final String locatorOfProductCard = ".product";
+    final String locatorOfProductCardName = ".name";
+    final String locatorOfStickerProductCard = ".sticker";
 
-    final String locatorOfMostPopularItemsPartFirst = "//h3[text() = '";
-    final String locatorOfMostPopularItemsPartSecond = "']/following-sibling::div//li";
-    final String locatorOfStickerItem = "a div.sticker";
-    final String locatorOfNameItem = "a div.name";
-
-
-    @ParameterizedTest(name = "Checking that {0} items has only one sticker")
-    @ValueSource(strings = {
-            "Most Popular",
-            "Campaigns",
-            "Latest Products"})
-    public void checkThatItemsHasOnlyOneSticker(String sectionName) {
+    @Test
+    @DisplayName("Checking that product card has only one sticker")
+    public void checkThatProductCardHasOnlyOneSticker() {
         driver.navigate().to(urlPage);
-        List<WebElement> list = driver.findElements(xpath(
-                locatorOfMostPopularItemsPartFirst + sectionName + locatorOfMostPopularItemsPartSecond));
+        List<WebElement> list = driver.findElements(cssSelector(locatorOfProductCard));
         for (WebElement element : list) {
-            int stickerNumber = element.findElements(cssSelector(locatorOfStickerItem)).size();
+            int stickerNumber = element.findElements(cssSelector(locatorOfStickerProductCard)).size();
             Assertions.assertEquals(1, stickerNumber,
-                    "Item with name: "
-                            + element.findElement(cssSelector(locatorOfNameItem)).getText()
-                            + " in section: " + sectionName
-                            + " hasn't only one sticker");
+                    "Product card with name: '"
+                            + element.findElement(cssSelector(locatorOfProductCardName)).getText()
+                            + "' hasn't only one sticker");
         }
     }
 }
