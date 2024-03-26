@@ -3,11 +3,12 @@ import java.time.Duration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.openqa.selenium.By.cssSelector;
 
 public class AdminAuthorizationPageTest extends TestBase {
     final String pageUrl = "http://localhost/litecart/admin/";
@@ -30,9 +31,9 @@ public class AdminAuthorizationPageTest extends TestBase {
     public void checkNameFieldsOfAuthorizationPanelTest() {
         driver.navigate().to(pageUrl);
 
-        String actualUserNameFieldText = driver.findElement(By.cssSelector(locatorOfUserNameText)).getText();
-        String actualPasswordFieldText = driver.findElement(By.cssSelector(locatorOfPasswordText)).getText();
-        String actualNameLoginButton = driver.findElement(By.cssSelector(locatorOfLoginButton)).getText();
+        String actualUserNameFieldText = driver.findElement(cssSelector(locatorOfUserNameText)).getText();
+        String actualPasswordFieldText = driver.findElement(cssSelector(locatorOfPasswordText)).getText();
+        String actualNameLoginButton = driver.findElement(cssSelector(locatorOfLoginButton)).getText();
 
         Assertions.assertEquals("Username", actualUserNameFieldText);
         Assertions.assertEquals("Password", actualPasswordFieldText);
@@ -44,11 +45,11 @@ public class AdminAuthorizationPageTest extends TestBase {
     public void checkSuccessNoticeTextWhenSuccessfulAuthorizationToAdminPanelTest() {
         driver.navigate().to(pageUrl);
 
-        driver.findElement(By.cssSelector(locatorOfUserNameField)).sendKeys(adminLogin);
-        driver.findElement(By.cssSelector(locatorOfPasswordField)).sendKeys(adminPassword);
-        driver.findElement(By.cssSelector(locatorOfLoginButton)).click();
+        driver.findElement(cssSelector(locatorOfUserNameField)).sendKeys(adminLogin);
+        driver.findElement(cssSelector(locatorOfPasswordField)).sendKeys(adminPassword);
+        driver.findElement(cssSelector(locatorOfLoginButton)).click();
 
-        WebElement successNoticeElement = driver.findElement(By.cssSelector(locatorOfSuccessNoticeText));
+        WebElement successNoticeElement = driver.findElement(cssSelector(locatorOfSuccessNoticeText));
         wait.until(e -> successNoticeElement.isDisplayed());
         String actualErrorNoticeText = successNoticeElement.getText();
 
@@ -60,11 +61,11 @@ public class AdminAuthorizationPageTest extends TestBase {
     public void checkErrorNoticeTextWhenUnsuccessfulAuthorizationToAdminPanelTest() {
         driver.navigate().to(pageUrl);
 
-        driver.findElement(By.cssSelector(locatorOfUserNameField)).sendKeys("123");
-        driver.findElement(By.cssSelector(locatorOfPasswordField)).sendKeys("123");
-        driver.findElement(By.cssSelector(locatorOfLoginButton)).click();
+        driver.findElement(cssSelector(locatorOfUserNameField)).sendKeys("123");
+        driver.findElement(cssSelector(locatorOfPasswordField)).sendKeys("123");
+        driver.findElement(cssSelector(locatorOfLoginButton)).click();
 
-        WebElement errorNoticeElement = driver.findElement(By.cssSelector(locatorOfErrorNoticeText));
+        WebElement errorNoticeElement = driver.findElement(cssSelector(locatorOfErrorNoticeText));
         wait.until(e -> errorNoticeElement.isDisplayed());
         String actualErrorNoticeText = errorNoticeElement.getText();
 

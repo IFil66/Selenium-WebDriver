@@ -151,7 +151,7 @@ public class LeftMenuOfAdminPageTest extends TestBase {
     @Test
     @DisplayName("Проверка работы кнопок левого навигационного меню панели админа")
     public void checkingButtonsOfLeftNavigationMenuAdminPanel() {
-        goToCheckingPage();
+        goToAdminPageAndLoginThere();
         checkingSuccessfulNavigationToAppearencesTabs();
         checkingSuccessfulNavigationToCatalogsTabs();
         checkingSuccessfulNavigationToCountriesTabs();
@@ -171,7 +171,7 @@ public class LeftMenuOfAdminPageTest extends TestBase {
         checkingSuccessfulNavigationToVQmodsTabs();
     }
 
-    private void goToCheckingPage() {
+    private void goToAdminPageAndLoginThere() {
         driver.navigate().to(adminAuthorizationPage.pageUrl);
         driver.findElement(cssSelector(adminAuthorizationPage.locatorOfUserNameField))
                 .sendKeys(adminAuthorizationPage.adminLogin);
