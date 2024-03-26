@@ -18,11 +18,11 @@ public class TestBase {
 
     @BeforeEach
     public void start() {
-//        ChromeOptions options = new ChromeOptions();
-//        driver = new ChromeDriver(options);
+        ChromeOptions options = new ChromeOptions();
+        driver = new ChromeDriver(options);
 
-        FirefoxOptions options = new FirefoxOptions();
-        driver = new FirefoxDriver(options);
+//        FirefoxOptions options = new FirefoxOptions();
+//        driver = new FirefoxDriver(options);
 
 //        SafariOptions options = new SafariOptions();
 //        driver = new SafariDriver(options);
@@ -30,7 +30,7 @@ public class TestBase {
 //        EdgeOptions options = new EdgeOptions();
 //        driver = new EdgeDriver(options);
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
     @AfterEach

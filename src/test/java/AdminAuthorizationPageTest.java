@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminAuthorizationPageTest extends TestBase {
-    final String pageUrl = "http://localhost:8080/litecart/admin/";
+    final String pageUrl = "http://localhost/litecart/admin/";
     final String adminLogin = "admin";
     final String adminPassword = "admin";
 
@@ -40,7 +40,7 @@ public class AdminAuthorizationPageTest extends TestBase {
     }
 
     @Test
-    @DisplayName("Проверка текста уведомления об ошибке при авторизации с невалидными данными")
+    @DisplayName("Проверка текста уведомления об успешной авторизации за админа")
     public void checkSuccessNoticeTextWhenSuccessfulAuthorizationToAdminPanelTest() {
         driver.navigate().to(pageUrl);
 
