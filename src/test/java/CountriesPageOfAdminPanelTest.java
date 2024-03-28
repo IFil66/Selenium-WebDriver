@@ -34,7 +34,7 @@ public class CountriesPageOfAdminPanelTest extends TestBase {
 
     @Test
     @DisplayName("Проверка сортировки геозон в странах по алфавиту")
-    public void getZoneNamesListAndCheckIfItIsSortedAlphabetically() {
+    public void getCountryWithZonesAndGetZoneNamesListAndCheckIfItIsSortedAlphabetically() {
         adminAuthorizationPage.goToAdminPageAndLoginThere(driver, pageUrl);
         List<WebElement> webElements = driver.findElements(cssSelector(allRowCountryNameTable));
         List<String> countryLinkList = webElements.stream()
