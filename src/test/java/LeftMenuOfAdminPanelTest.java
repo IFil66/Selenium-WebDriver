@@ -1,18 +1,10 @@
-import java.time.Duration;
-
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.By.cssSelector;
 
-public class LeftMenuOfAdminPageTest extends TestBase {
-    Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+public class LeftMenuOfAdminPanelTest extends TestBase {
     final AdminAuthorizationPageTest adminAuthorizationPage = new AdminAuthorizationPageTest();
     final String pageUrl = "http://localhost/litecart/admin";
     final String locatorOfAllTabs = "#app-";
@@ -22,7 +14,7 @@ public class LeftMenuOfAdminPageTest extends TestBase {
     @Test
     @DisplayName("Проверка работы кнопок левого навигационного меню панели админа")
     public void checkingButtonsOfLeftNavigationMenuAdminPanel() {
-        goToAdminPageAndLoginThere();
+        adminAuthorizationPage.goToAdminPageAndLoginThere(driver, pageUrl);
 
         int numberTabs = driver.findElements(cssSelector(locatorOfAllTabs)).size();
         for (int i = 1; i <= numberTabs; i++) {
@@ -36,18 +28,5 @@ public class LeftMenuOfAdminPageTest extends TestBase {
                 }
             }
         }
-    }
-
-    private void goToAdminPageAndLoginThere() {
-        driver.navigate().to(adminAuthorizationPage.pageUrl);
-        driver.findElement(cssSelector(adminAuthorizationPage.locatorOfUserNameField))
-                .sendKeys(adminAuthorizationPage.adminLogin);
-        driver.findElement(cssSelector(adminAuthorizationPage.locatorOfPasswordField))
-                .sendKeys(adminAuthorizationPage.adminPassword);
-        driver.findElement(cssSelector(adminAuthorizationPage.locatorOfLoginButton)).click();
-        WebElement successNoticeElement =
-                driver.findElement(cssSelector(adminAuthorizationPage.locatorOfSuccessNoticeText));
-        wait.until(e -> successNoticeElement.isDisplayed());
-        Assumptions.assumeTrue(driver.getCurrentUrl().contains(pageUrl), "Current page hasn't URL: " + pageUrl);
     }
 }

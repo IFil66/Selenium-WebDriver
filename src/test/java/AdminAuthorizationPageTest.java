@@ -1,6 +1,7 @@
 import java.time.Duration;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.openqa.selenium.By.cssSelector;
 
 public class AdminAuthorizationPageTest extends TestBase {
-    final String pageUrl = "http://localhost/litecart/admin/";
+    final String url = "http://localhost/litecart/admin/";
     final String adminLogin = "admin";
     final String adminPassword = "admin";
 
@@ -29,7 +30,7 @@ public class AdminAuthorizationPageTest extends TestBase {
     @Test
     @DisplayName("Проверка названия полей и кнопки формы авторизации Админа")
     public void checkNameFieldsOfAuthorizationPanelTest() {
-        driver.navigate().to(pageUrl);
+        driver.navigate().to(url);
 
         String actualUserNameFieldText = driver.findElement(cssSelector(locatorOfUserNameText)).getText();
         String actualPasswordFieldText = driver.findElement(cssSelector(locatorOfPasswordText)).getText();
@@ -43,11 +44,7 @@ public class AdminAuthorizationPageTest extends TestBase {
     @Test
     @DisplayName("Проверка текста уведомления об успешной авторизации за админа")
     public void checkSuccessNoticeTextWhenSuccessfulAuthorizationToAdminPanelTest() {
-        driver.navigate().to(pageUrl);
-
-        driver.findElement(cssSelector(locatorOfUserNameField)).sendKeys(adminLogin);
-        driver.findElement(cssSelector(locatorOfPasswordField)).sendKeys(adminPassword);
-        driver.findElement(cssSelector(locatorOfLoginButton)).click();
+        goToAdminPageAndLoginThere(driver, url);
 
         WebElement successNoticeElement = driver.findElement(cssSelector(locatorOfSuccessNoticeText));
         wait.until(e -> successNoticeElement.isDisplayed());
@@ -59,7 +56,7 @@ public class AdminAuthorizationPageTest extends TestBase {
     @Test
     @DisplayName("Проверка текста уведомления об ошибке при авторизации с невалидными данными")
     public void checkErrorNoticeTextWhenUnsuccessfulAuthorizationToAdminPanelTest() {
-        driver.navigate().to(pageUrl);
+        driver.navigate().to(url);
 
         driver.findElement(cssSelector(locatorOfUserNameField)).sendKeys("123");
         driver.findElement(cssSelector(locatorOfPasswordField)).sendKeys("123");
@@ -70,5 +67,15 @@ public class AdminAuthorizationPageTest extends TestBase {
         String actualErrorNoticeText = errorNoticeElement.getText();
 
         Assertions.assertEquals("The user could not be found in our database", actualErrorNoticeText);
+    }
+
+    public void goToAdminPageAndLoginThere(WebDriver driver, String pageUrl) {
+        driver.navigate().to(pageUrl);
+        driver.findElement(cssSelector(locatorOfUserNameField)).sendKeys(adminLogin);
+        driver.findElement(cssSelector(locatorOfPasswordField)).sendKeys(adminPassword);
+        driver.findElement(cssSelector(locatorOfLoginButton)).click();
+        WebElement successNoticeElement = driver.findElement(cssSelector(locatorOfSuccessNoticeText));
+        wait.until(e -> successNoticeElement.isDisplayed());
+        Assumptions.assumeTrue(driver.getCurrentUrl().contains(pageUrl), "Current page hasn't URL: " + pageUrl);
     }
 }
